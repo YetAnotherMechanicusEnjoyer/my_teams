@@ -28,10 +28,10 @@ impl Client {
     }
 
     pub fn extract_command(&mut self) -> Option<String> {
-        if let Some(pos) = self.read_buffer.windows(2).position(|w| w == b"\r\n") {
-            let command_bytes: Vec<u8> = self.read_buffer.drain(..pos + 2).collect();
+        if let Some(pos) = self.read_buffer.windows(1).position(|w| w == b"\n") {
+            let command_bytes: Vec<u8> = self.read_buffer.drain(..pos + 1).collect();
             if let Ok(command) =
-                String::from_utf8(command_bytes[..command_bytes.len() - 2].to_vec())
+                String::from_utf8(command_bytes[..command_bytes.len() - 1].to_vec())
             {
                 return Some(command);
             }
@@ -41,6 +41,6 @@ impl Client {
 
     pub fn queue_message(&mut self, message: &str) {
         self.write_buffer.extend_from_slice(message.as_bytes());
-        self.write_buffer.extend_from_slice(b"\r\n");
+        self.write_buffer.extend_from_slice(b"\n");
     }
 }
