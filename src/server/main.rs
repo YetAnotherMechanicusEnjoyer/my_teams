@@ -4,6 +4,14 @@ pub mod server;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
+    if let Some(flag) = args.get(1)
+        && flag == "--help"
+    {
+        println!(
+            "USAGE: ./myteams_server port\n\nport is the port number on which the server socket listens."
+        );
+        std::process::exit(0);
+    }
     if args.len() != 2 {
         println!("USAGE: ./myteams_server port");
         std::process::exit(84);
