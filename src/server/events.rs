@@ -1,9 +1,6 @@
 use std::net::SocketAddr;
 
-use crate::{
-    client::UseContext,
-    server::Server,
-};
+use crate::{client::UseContext, server::Server};
 
 impl Server {
     pub(crate) fn is_subscribed_to_team(&self, user_uuid: &str, team_uuid: &str) -> bool {

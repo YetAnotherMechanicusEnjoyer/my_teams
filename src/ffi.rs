@@ -286,7 +286,11 @@ pub fn call_client_event_thread_reply_received(
 
 pub fn call_client_event_team_created(team_uuid: &str, team_name: &str, team_description: &str) {
     unsafe {
-        client_event_team_created(c_str!(team_uuid), c_str!(team_name), c_str!(team_description))
+        client_event_team_created(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
     };
 }
 
@@ -327,7 +331,13 @@ pub fn call_client_print_users(user_uuid: &str, user_name: &str, user_status: i3
 }
 
 pub fn call_client_print_teams(team_uuid: &str, team_name: &str, team_description: &str) {
-    unsafe { client_print_teams(c_str!(team_uuid), c_str!(team_name), c_str!(team_description)) };
+    unsafe {
+        client_print_teams(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
+    };
 }
 
 pub fn call_client_team_print_channels(
@@ -393,7 +403,13 @@ pub fn call_client_private_message_print_messages(
 }
 
 pub fn call_client_print_team(team_uuid: &str, team_name: &str, team_description: &str) {
-    unsafe { client_print_team(c_str!(team_uuid), c_str!(team_name), c_str!(team_description)) };
+    unsafe {
+        client_print_team(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
+    };
 }
 
 pub fn call_client_print_channel(

@@ -1,14 +1,10 @@
-use std::{
-    collections::HashMap,
-    net::SocketAddr,
-    time::UNIX_EPOCH,
-};
+use std::{collections::HashMap, net::SocketAddr, time::UNIX_EPOCH};
 
 use my_teams::ffi;
 
 use crate::{
     client::UseContext,
-    models::{generate_uuid, Channel, Message, Team, Thread, User},
+    models::{Channel, Message, Team, Thread, User, generate_uuid},
     server::Server,
 };
 
@@ -187,7 +183,8 @@ impl Server {
                 }
 
                 if let Some(client) = self.clients.get_mut(&addr) {
-                    client.use_context = UseContext::Channel(team_uuid.clone(), channel_uuid.clone());
+                    client.use_context =
+                        UseContext::Channel(team_uuid.clone(), channel_uuid.clone());
                     client.queue_message("200 Context Updated");
                 }
             }
@@ -753,7 +750,10 @@ impl Server {
 
                 self.send_to(
                     addr,
-                    &format!("200 INFO_TEAM|{}|{}|{}", team.uuid, team.name, team.description),
+                    &format!(
+                        "200 INFO_TEAM|{}|{}|{}",
+                        team.uuid, team.name, team.description
+                    ),
                 );
             }
             UseContext::Channel(team_uuid, channel_uuid) => {

@@ -56,10 +56,11 @@ fn handle_server_message(message: &str, state: &Arc<Mutex<ClientState>>) {
             }
         }
         "200 Logout OK" => {
-            if let Ok(s) = state.lock() {
-                if !s.uuid.is_empty() && !s.name.is_empty() {
-                    ffi::call_client_event_logged_out(&s.uuid, &s.name);
-                }
+            if let Ok(s) = state.lock()
+                && !s.uuid.is_empty()
+                && !s.name.is_empty()
+            {
+                ffi::call_client_event_logged_out(&s.uuid, &s.name);
             }
 
             if let Ok(mut s) = state.lock() {
