@@ -303,3 +303,26 @@ pub fn call_client_error_unknown_user(user_uuid: &str) {
 pub fn call_client_error_unknown_team(team_uuid: &str) {
     unsafe { client_error_unknown_team(c_str!(team_uuid)) };
 }
+
+pub fn client_event_thread_reply_received(...);
+pub fn client_event_team_created(...);
+pub fn client_event_channel_created(...);
+pub fn client_event_thread_created(...);
+pub fn client_print_teams(...);
+pub fn client_team_print_channels(...);
+pub fn client_channel_print_threads(...);
+pub fn client_thread_print_replies(...);
+pub fn client_print_team(...);
+pub fn client_print_channel(...);
+pub fn client_print_thread(...);
+pub fn client_error_unknown_channel(...);
+pub fn client_error_unknown_thread(...);
+pub fn call_client_print_teams(...)
+pub fn call_client_team_print_channels(...)
+pub fn call_client_channel_print_threads(...)
+pub fn call_client_thread_print_replies(...)
+pub fn call_client_print_team(...)
+pub fn call_client_print_channel(...)
+pub fn call_client_print_thread(...)
+pub fn call_client_error_unknown_channel(...)
+pub fn call_client_error_unknown_thread(...)

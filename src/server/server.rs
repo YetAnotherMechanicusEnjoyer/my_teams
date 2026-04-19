@@ -540,9 +540,8 @@ impl Server {
                 ffi::call_thread_created(&channel_uuid, &new_uuid, &client_uuid, title, body);
                 self.send_to(
                     addr,
-                    &format!("200 THREAD_CREATED|{new_uuid}|{client_uuid}|{title}|{body}"),
-                );
-            }
+                    &format!("200 THREAD_CREATED|{new_uuid}|{client_uuid}|{timestamp}|{title}|{body}"),
+                );            }
             UseContext::Thread(team_uuid, channel_uuid, thread_uuid) => {
                 if args.len() != 2 {
                     return self.send_to(addr, "400 Bad Request");
