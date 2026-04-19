@@ -1,1 +1,5 @@
 /target
+myteams_cli
+myteams_server
+Cargo.lock
+*.data

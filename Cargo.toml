@@ -3,4 +3,10 @@ name = "my_teams"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
+[[bin]]
+name = "myteams_server"
+path = "src/server/main.rs"
+
+[[bin]]
+name = "myteams_cli"
+path = "src/client/main.rs"
