@@ -1,19 +1,22 @@
 pub mod client;
+pub mod commands;
+pub mod events;
 pub mod models;
 pub mod server;
+
+const HELP_FLAG: &str =
+    "USAGE: ./myteams_server port\n\nport is the port number on which the server socket listens.";
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if let Some(flag) = args.get(1)
         && flag == "--help"
     {
-        println!(
-            "USAGE: ./myteams_server port\n\nport is the port number on which the server socket listens."
-        );
+        println!("{HELP_FLAG}");
         std::process::exit(0);
     }
     if args.len() != 2 {
-        println!("USAGE: ./myteams_server port");
+        println!("{HELP_FLAG}");
         std::process::exit(84);
     }
 

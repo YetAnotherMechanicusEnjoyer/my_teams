@@ -20,7 +20,6 @@ pub fn setup_signal_handler() {
 }
 
 unsafe extern "C" {
-
     /*
         <== SERVER ==>
     */
@@ -72,13 +71,76 @@ unsafe extern "C" {
         user_uuid: *const c_char,
         message_body: *const c_char,
     );
+    pub fn client_event_thread_reply_received(
+        team_uuid: *const c_char,
+        thread_uuid: *const c_char,
+        user_uuid: *const c_char,
+        reply_body: *const c_char,
+    );
+    pub fn client_event_team_created(
+        team_uuid: *const c_char,
+        team_name: *const c_char,
+        team_description: *const c_char,
+    );
+    pub fn client_event_channel_created(
+        channel_uuid: *const c_char,
+        channel_name: *const c_char,
+        channel_description: *const c_char,
+    );
+    pub fn client_event_thread_created(
+        thread_uuid: *const c_char,
+        user_uuid: *const c_char,
+        thread_timestamp: u64,
+        thread_title: *const c_char,
+        thread_body: *const c_char,
+    );
 
     pub fn client_print_users(user_uuid: *const c_char, user_name: *const c_char, user_status: i32);
+    pub fn client_print_teams(
+        team_uuid: *const c_char,
+        team_name: *const c_char,
+        team_description: *const c_char,
+    );
+    pub fn client_team_print_channels(
+        channel_uuid: *const c_char,
+        channel_name: *const c_char,
+        channel_description: *const c_char,
+    );
+    pub fn client_channel_print_threads(
+        thread_uuid: *const c_char,
+        user_uuid: *const c_char,
+        thread_timestamp: u64,
+        thread_title: *const c_char,
+        thread_body: *const c_char,
+    );
+    pub fn client_thread_print_replies(
+        thread_uuid: *const c_char,
+        user_uuid: *const c_char,
+        reply_timestamp: u64,
+        reply_body: *const c_char,
+    );
     pub fn client_print_user(user_uuid: *const c_char, user_name: *const c_char, user_status: i32);
     pub fn client_private_message_print_messages(
         sender_uuid: *const c_char,
         timestamp: u64,
         message_body: *const c_char,
+    );
+    pub fn client_print_team(
+        team_uuid: *const c_char,
+        team_name: *const c_char,
+        team_description: *const c_char,
+    );
+    pub fn client_print_channel(
+        channel_uuid: *const c_char,
+        channel_name: *const c_char,
+        channel_description: *const c_char,
+    );
+    pub fn client_print_thread(
+        thread_uuid: *const c_char,
+        user_uuid: *const c_char,
+        thread_timestamp: u64,
+        thread_title: *const c_char,
+        thread_body: *const c_char,
     );
     pub fn client_print_team_created(
         team_uuid: *const c_char,
@@ -108,8 +170,10 @@ unsafe extern "C" {
 
     pub fn client_error_unauthorized();
     pub fn client_error_already_exist();
-    pub fn client_error_unknown_user(user_uuid: *const c_char);
     pub fn client_error_unknown_team(team_uuid: *const c_char);
+    pub fn client_error_unknown_channel(channel_uuid: *const c_char);
+    pub fn client_error_unknown_thread(thread_uuid: *const c_char);
+    pub fn client_error_unknown_user(user_uuid: *const c_char);
 }
 
 macro_rules! c_str {
@@ -204,8 +268,124 @@ pub fn call_client_event_private_message_received(user_uuid: &str, message_body:
     unsafe { client_event_private_message_received(c_str!(user_uuid), c_str!(message_body)) };
 }
 
+pub fn call_client_event_thread_reply_received(
+    team_uuid: &str,
+    thread_uuid: &str,
+    user_uuid: &str,
+    reply_body: &str,
+) {
+    unsafe {
+        client_event_thread_reply_received(
+            c_str!(team_uuid),
+            c_str!(thread_uuid),
+            c_str!(user_uuid),
+            c_str!(reply_body),
+        )
+    };
+}
+
+pub fn call_client_event_team_created(team_uuid: &str, team_name: &str, team_description: &str) {
+    unsafe {
+        client_event_team_created(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
+    };
+}
+
+pub fn call_client_event_channel_created(
+    channel_uuid: &str,
+    channel_name: &str,
+    channel_description: &str,
+) {
+    unsafe {
+        client_event_channel_created(
+            c_str!(channel_uuid),
+            c_str!(channel_name),
+            c_str!(channel_description),
+        )
+    };
+}
+
+pub fn call_client_event_thread_created(
+    thread_uuid: &str,
+    user_uuid: &str,
+    thread_timestamp: u64,
+    thread_title: &str,
+    thread_body: &str,
+) {
+    unsafe {
+        client_event_thread_created(
+            c_str!(thread_uuid),
+            c_str!(user_uuid),
+            thread_timestamp,
+            c_str!(thread_title),
+            c_str!(thread_body),
+        )
+    };
+}
+
 pub fn call_client_print_users(user_uuid: &str, user_name: &str, user_status: i32) {
     unsafe { client_print_users(c_str!(user_uuid), c_str!(user_name), user_status) };
+}
+
+pub fn call_client_print_teams(team_uuid: &str, team_name: &str, team_description: &str) {
+    unsafe {
+        client_print_teams(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
+    };
+}
+
+pub fn call_client_team_print_channels(
+    channel_uuid: &str,
+    channel_name: &str,
+    channel_description: &str,
+) {
+    unsafe {
+        client_team_print_channels(
+            c_str!(channel_uuid),
+            c_str!(channel_name),
+            c_str!(channel_description),
+        )
+    };
+}
+
+pub fn call_client_channel_print_threads(
+    thread_uuid: &str,
+    user_uuid: &str,
+    thread_timestamp: u64,
+    thread_title: &str,
+    thread_body: &str,
+) {
+    unsafe {
+        client_channel_print_threads(
+            c_str!(thread_uuid),
+            c_str!(user_uuid),
+            thread_timestamp,
+            c_str!(thread_title),
+            c_str!(thread_body),
+        )
+    };
+}
+
+pub fn call_client_thread_print_replies(
+    thread_uuid: &str,
+    user_uuid: &str,
+    reply_timestamp: u64,
+    reply_body: &str,
+) {
+    unsafe {
+        client_thread_print_replies(
+            c_str!(thread_uuid),
+            c_str!(user_uuid),
+            reply_timestamp,
+            c_str!(reply_body),
+        )
+    };
 }
 
 pub fn call_client_print_user(user_uuid: &str, user_name: &str, user_status: i32) {
@@ -219,6 +399,48 @@ pub fn call_client_private_message_print_messages(
 ) {
     unsafe {
         client_private_message_print_messages(c_str!(sender_uuid), timestamp, c_str!(message_body))
+    };
+}
+
+pub fn call_client_print_team(team_uuid: &str, team_name: &str, team_description: &str) {
+    unsafe {
+        client_print_team(
+            c_str!(team_uuid),
+            c_str!(team_name),
+            c_str!(team_description),
+        )
+    };
+}
+
+pub fn call_client_print_channel(
+    channel_uuid: &str,
+    channel_name: &str,
+    channel_description: &str,
+) {
+    unsafe {
+        client_print_channel(
+            c_str!(channel_uuid),
+            c_str!(channel_name),
+            c_str!(channel_description),
+        )
+    };
+}
+
+pub fn call_client_print_thread(
+    thread_uuid: &str,
+    user_uuid: &str,
+    thread_timestamp: u64,
+    thread_title: &str,
+    thread_body: &str,
+) {
+    unsafe {
+        client_print_thread(
+            c_str!(thread_uuid),
+            c_str!(user_uuid),
+            thread_timestamp,
+            c_str!(thread_title),
+            c_str!(thread_body),
+        )
     };
 }
 
@@ -296,10 +518,18 @@ pub fn call_client_error_already_exist() {
     unsafe { client_error_already_exist() };
 }
 
-pub fn call_client_error_unknown_user(user_uuid: &str) {
-    unsafe { client_error_unknown_user(c_str!(user_uuid)) };
-}
-
 pub fn call_client_error_unknown_team(team_uuid: &str) {
     unsafe { client_error_unknown_team(c_str!(team_uuid)) };
+}
+
+pub fn call_client_error_unknown_channel(channel_uuid: &str) {
+    unsafe { client_error_unknown_channel(c_str!(channel_uuid)) };
+}
+
+pub fn call_client_error_unknown_thread(thread_uuid: &str) {
+    unsafe { client_error_unknown_thread(c_str!(thread_uuid)) };
+}
+
+pub fn call_client_error_unknown_user(user_uuid: &str) {
+    unsafe { client_error_unknown_user(c_str!(user_uuid)) };
 }
