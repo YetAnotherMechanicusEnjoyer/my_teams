@@ -1,4 +1,6 @@
 pub mod client;
+pub mod commands;
+pub mod events;
 pub mod models;
 pub mod server;
 
